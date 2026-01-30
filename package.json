@@ -1,8 +1,7 @@
 {
-  "name": "flix-finder-stremio-addon",
+  "name": "flix-finder",
   "version": "2.0.0",
-  "description": "Stremio addon that searches Knaben torrent database and returns magnet streams.",
+  "private": true,
   "main": "api/manifest.js",
-  "license": "MIT",
-  "dependencies": {}
+  "license": "MIT"
 }

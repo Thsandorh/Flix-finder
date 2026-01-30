@@ -1,41 +1,32 @@
-const { fetchExtResults, parseId } = require('./lib/ext');
+const { fetchExtResults, parseId, filterStreams, parseConfig } = require('./lib/ext');
 
-async function test() {
-  console.log('=== Flix Finder Scraper Test ===\n');
+(async () => {
+  console.log('Testing Flix-Finder scraper...\n');
 
-  // Test 1: parseId function
-  console.log('1. Testing parseId():');
-  console.log('   Movie: tt0111161 =>', parseId('tt0111161'));
-  console.log('   Series: tt0944947:1:5 =>', parseId('tt0944947:1:5'));
+  // Test parseId
+  console.log('parseId("tt0111161"):', parseId('tt0111161'));
+  console.log('parseId("tt0944947:1:5"):', parseId('tt0944947:1:5'));
   console.log('');
 
-  // Test 2: Movie search (The Shawshank Redemption)
-  console.log('2. Testing movie search (tt0111161 - The Shawshank Redemption):');
-  try {
-    const movieStreams = await fetchExtResults('tt0111161', { type: 'movie' });
-    console.log(`   Found ${movieStreams.length} streams`);
-    if (movieStreams.length > 0) {
-      console.log('   First result:', movieStreams[0].title.split('\n')[0]);
-    }
-  } catch (err) {
-    console.log('   Error:', err.message);
-  }
+  // Test movie
+  console.log('Movie search (Shawshank Redemption):');
+  const movies = await fetchExtResults('tt0111161', { type: 'movie' });
+  console.log(`Found ${movies.length} results`);
+  if (movies[0]) console.log('First:', movies[0].title.split('\n')[0]);
   console.log('');
 
-  // Test 3: Series search (Game of Thrones S01E01)
-  console.log('3. Testing series search (tt0944947:1:1 - Game of Thrones S01E01):');
-  try {
-    const seriesStreams = await fetchExtResults('tt0944947:1:1', { type: 'series' });
-    console.log(`   Found ${seriesStreams.length} streams`);
-    if (seriesStreams.length > 0) {
-      console.log('   First result:', seriesStreams[0].title.split('\n')[0]);
-    }
-  } catch (err) {
-    console.log('   Error:', err.message);
-  }
+  // Test series
+  console.log('Series search (Breaking Bad S01E01):');
+  const series = await fetchExtResults('tt0903747:1:1', { type: 'series' });
+  console.log(`Found ${series.length} results`);
+  if (series[0]) console.log('First:', series[0].title.split('\n')[0]);
   console.log('');
 
-  console.log('=== Test Complete ===');
-}
+  // Test filters
+  console.log('Filter test (quality=1080p):');
+  const config = parseConfig({ quality: '1080p' });
+  const filtered = filterStreams(movies, config);
+  console.log(`Filtered ${movies.length} -> ${filtered.length}`);
 
-test();
+  console.log('\nDone.');
+})();
