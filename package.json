@@ -1,10 +1,8 @@
 {
   "name": "flix-finder-stremio-addon",
-  "version": "1.0.0",
-  "description": "Stremio addon that searches ext.to by IMDb ID and returns magnet streams.",
+  "version": "2.0.0",
+  "description": "Stremio addon that searches Knaben torrent database and returns magnet streams.",
   "main": "api/manifest.js",
   "license": "MIT",
-  "dependencies": {
-    "cheerio": "^1.0.0-rc.12"
-  }
+  "dependencies": {}
 }
