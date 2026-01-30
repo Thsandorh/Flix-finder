@@ -28,5 +28,5 @@ Example:
 - The addon only accepts IMDb IDs (e.g. `tt1234567`) and ignores any season/episode suffixes.
 - Use the configuration page to set quality, include/exclude keywords, max results, and debrid settings.
 - Debrid options require an API token in the manifest query string.
-- If ext.to blocks requests with a 403, the addon retries through a text proxy.
+- If ext.to blocks requests with a 403 or returns no magnets, the addon retries through a text proxy.
 - If ext.to responds with no results or fails, an empty stream list is returned.
