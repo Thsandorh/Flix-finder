@@ -8,16 +8,16 @@ const { resolveDebridStreams } = require('../../../lib/debrid');
 
 module.exports = async (req, res) => {
   const { type, id } = req.query;
-  const imdbId = normalizeImdbId(id);
 
-  if (!imdbId) {
+  if (!normalizeImdbId(id)) {
     res.status(400).json({ streams: [] });
     return;
   }
 
   try {
     const config = parseConfig(req.query);
-    const streams = await fetchExtResults(imdbId, { type });
+    // Pass full id (e.g., tt1234567:1:5) so fetchExtResults can parse season/episode
+    const streams = await fetchExtResults(id, { type });
     const filtered = filterStreams(streams, config);
     const resolved = await resolveDebridStreams(filtered, config);
     res.status(200).json({ streams: resolved });
