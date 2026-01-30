@@ -2,207 +2,214 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1"
-    />
-    <title>Flix Finder Ext.to Configuration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flix-Finder Configuration</title>
     <style>
       :root {
-        color-scheme: light dark;
-        font-family: "Inter", system-ui, sans-serif;
+        color-scheme: dark;
+        font-family: system-ui, -apple-system, sans-serif;
       }
       body {
         margin: 0;
-        padding: 32px;
-        background: #0f1116;
-        color: #f5f7ff;
+        padding: 24px;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: #eee;
+        min-height: 100vh;
       }
       .container {
-        max-width: 720px;
+        max-width: 600px;
         margin: 0 auto;
-        background: #171a22;
-        padding: 24px;
+        background: rgba(30, 35, 50, 0.95);
+        padding: 28px;
         border-radius: 16px;
-        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      .logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
       }
       h1 {
-        margin-top: 0;
-        font-size: 28px;
+        margin: 0;
+        font-size: 24px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
-      p {
-        color: #c7ccda;
+      .subtitle {
+        color: #888;
+        font-size: 14px;
+        margin: 4px 0 0;
       }
       label {
         display: block;
-        margin: 16px 0 6px;
-        font-weight: 600;
+        margin: 18px 0 6px;
+        font-weight: 500;
+        font-size: 14px;
       }
-      select,
-      input {
+      select, input {
         width: 100%;
-        padding: 10px 12px;
-        border-radius: 10px;
-        border: 1px solid #2b3040;
-        background: #10131a;
-        color: inherit;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #333;
+        background: #12151c;
+        color: #fff;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      select:focus, input:focus {
+        outline: none;
+        border-color: #667eea;
       }
       .row {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: 1fr 1fr;
         gap: 16px;
+      }
+      .hint {
+        font-size: 12px;
+        color: #666;
+        margin-top: 4px;
       }
       .cta {
         display: flex;
-        flex-wrap: wrap;
         gap: 12px;
-        margin-top: 20px;
+        margin-top: 24px;
       }
       .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 16px;
-        border-radius: 12px;
+        flex: 1;
+        padding: 14px;
+        border-radius: 10px;
         border: none;
         font-weight: 600;
+        font-size: 14px;
         cursor: pointer;
         text-decoration: none;
+        text-align: center;
       }
       .btn-primary {
-        background: #5b8cff;
-        color: #0b0e14;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        color: #fff;
       }
-      .btn-outline {
+      .btn-secondary {
         background: transparent;
-        border: 1px solid #5b8cff;
-        color: #5b8cff;
+        border: 1px solid #667eea;
+        color: #667eea;
       }
-      .manifest-url {
-        margin-top: 12px;
-        font-size: 14px;
+      .url-box {
+        margin-top: 16px;
+        padding: 12px;
+        background: #0a0c10;
+        border-radius: 8px;
+        font-size: 12px;
         word-break: break-all;
-        color: #a7b0c8;
+        color: #888;
       }
-      .hint {
-        font-size: 13px;
-        color: #99a4bf;
+      @media (max-width: 500px) {
+        .row { grid-template-columns: 1fr; }
+        .cta { flex-direction: column; }
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>Flix Finder Ext.to Configuration</h1>
-      <p>Configure search filters, then add the addon to Stremio.</p>
+      <div class="header">
+        <img class="logo" src="https://raw.githubusercontent.com/Thsandorh/Flix-finder/main/logo.svg" alt="Flix-Finder" />
+        <div>
+          <h1>Flix-Finder</h1>
+          <p class="subtitle">Configure your addon settings</p>
+        </div>
+      </div>
 
       <div class="row">
         <div>
           <label for="quality">Quality</label>
           <select id="quality">
             <option value="any">Any</option>
-            <option value="2160p">2160p / 4K</option>
+            <option value="2160p">4K / 2160p</option>
             <option value="1080p">1080p</option>
             <option value="720p">720p</option>
           </select>
         </div>
         <div>
           <label for="maxResults">Max results</label>
-          <input id="maxResults" type="number" min="0" placeholder="0 = unlimited" />
+          <input id="maxResults" type="number" min="1" max="50" value="10" />
         </div>
       </div>
 
-      <label for="include">Required keywords (comma-separated)</label>
-      <input id="include" type="text" placeholder="e.g. HDR, x265" />
+      <label for="include">Required keywords</label>
+      <input id="include" type="text" placeholder="HDR, HEVC, x265" />
+      <p class="hint">Comma separated. All must match.</p>
 
-      <label for="exclude">Blocked keywords (comma-separated)</label>
-      <input id="exclude" type="text" placeholder="e.g. CAM, TS" />
-      <p class="hint">Filters match against the stream title.</p>
+      <label for="exclude">Exclude keywords</label>
+      <input id="exclude" type="text" placeholder="CAM, TS, HDCAM" />
+      <p class="hint">Comma separated. Any match is excluded.</p>
 
-      <label for="debrid">Debrid provider</label>
+      <label for="debrid">Debrid Service</label>
       <select id="debrid">
-        <option value="none">None</option>
+        <option value="none">None (magnet links)</option>
         <option value="realdebrid">Real-Debrid</option>
         <option value="torbox">Torbox</option>
       </select>
 
-      <label for="debridToken">Debrid API token</label>
-      <input id="debridToken" type="password" placeholder="Paste your API token" />
-      <p class="hint">Your token stays in the URL query used by Stremio.</p>
+      <label for="debridToken">API Token</label>
+      <input id="debridToken" type="password" placeholder="Your debrid API token" />
+      <p class="hint">Get from Real-Debrid or Torbox account settings</p>
 
       <div class="cta">
-        <a class="btn btn-primary" id="stremio-link" href="#">Add to Stremio</a>
-        <button class="btn btn-outline" id="copy-link" type="button">Copy manifest link</button>
+        <a class="btn btn-primary" id="install" href="#">Install in Stremio</a>
+        <button class="btn btn-secondary" id="copy" type="button">Copy URL</button>
       </div>
 
-      <div class="manifest-url" id="manifest-url"></div>
+      <div class="url-box" id="url"></div>
     </div>
 
     <script>
-      const fields = [
-        document.getElementById("quality"),
-        document.getElementById("maxResults"),
-        document.getElementById("include"),
-        document.getElementById("exclude"),
-        document.getElementById("debrid"),
-        document.getElementById("debridToken")
-      ];
-      const manifestUrlEl = document.getElementById("manifest-url");
-      const stremioLink = document.getElementById("stremio-link");
-      const copyLink = document.getElementById("copy-link");
+      const $ = id => document.getElementById(id);
+      const fields = ['quality', 'maxResults', 'include', 'exclude', 'debrid', 'debridToken'];
 
-      function buildManifestUrl() {
-        const params = new URLSearchParams();
-        const quality = document.getElementById("quality").value;
-        const maxResults = document.getElementById("maxResults").value;
-        const include = document.getElementById("include").value.trim();
-        const exclude = document.getElementById("exclude").value.trim();
-        const debrid = document.getElementById("debrid").value;
-        const debridToken = document.getElementById("debridToken").value.trim();
+      function update() {
+        const p = new URLSearchParams();
+        const q = $('quality').value;
+        const m = $('maxResults').value;
+        const i = $('include').value.trim();
+        const e = $('exclude').value.trim();
+        const d = $('debrid').value;
+        const t = $('debridToken').value.trim();
 
-        if (quality && quality !== "any") {
-          params.set("quality", quality);
-        }
-        if (maxResults) {
-          params.set("maxResults", maxResults);
-        }
-        if (include) {
-          params.set("include", include);
-        }
-        if (exclude) {
-          params.set("exclude", exclude);
-        }
-        if (debrid && debrid !== "none") {
-          params.set("debrid", debrid);
-        }
-        if (debridToken) {
-          params.set("debridToken", debridToken);
-        }
+        if (q && q !== 'any') p.set('quality', q);
+        if (m && m !== '10') p.set('maxResults', m);
+        if (i) p.set('include', i);
+        if (e) p.set('exclude', e);
+        if (d && d !== 'none') p.set('debrid', d);
+        if (t) p.set('debridToken', t);
 
-        const baseUrl = `${window.location.origin}/manifest.json`;
-        const url = params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
+        const base = location.origin + '/manifest.json';
+        const url = p.toString() ? base + '?' + p : base;
 
-        manifestUrlEl.textContent = url;
-        stremioLink.href = `stremio://addon-install?manifest=${encodeURIComponent(url)}`;
-        return url;
+        $('url').textContent = url;
+        $('install').href = 'stremio://' + url.replace(/^https?:\/\//, '');
       }
 
-      fields.forEach((field) => field.addEventListener("input", buildManifestUrl));
-      fields.forEach((field) => field.addEventListener("change", buildManifestUrl));
-
-      copyLink.addEventListener("click", async () => {
-        const url = buildManifestUrl();
-        try {
-          await navigator.clipboard.writeText(url);
-          copyLink.textContent = "Copied!";
-          setTimeout(() => {
-            copyLink.textContent = "Copy manifest link";
-          }, 1500);
-        } catch (error) {
-          copyLink.textContent = "Copy failed";
-        }
+      fields.forEach(id => {
+        $(id).addEventListener('input', update);
+        $(id).addEventListener('change', update);
       });
 
-      buildManifestUrl();
+      $('copy').onclick = async () => {
+        await navigator.clipboard.writeText($('url').textContent);
+        $('copy').textContent = 'Copied!';
+        setTimeout(() => $('copy').textContent = 'Copy URL', 1500);
+      };
+
+      update();
     </script>
   </body>
 </html>
