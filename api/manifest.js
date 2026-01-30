@@ -4,6 +4,7 @@ const manifest = {
   name: 'Flix Finder Ext.to',
   description: 'Stremio addon that searches ext.to by IMDb ID and returns magnet streams.',
   logo: 'https://ext.to/img/logo.png',
+  configurable: true,
   resources: ['stream'],
   types: ['movie', 'series'],
   catalogs: [],

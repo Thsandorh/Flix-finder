@@ -1,4 +1,10 @@
-const { fetchExtResults, normalizeImdbId } = require('../../../lib/ext');
+const {
+  fetchExtResults,
+  normalizeImdbId,
+  parseConfig,
+  filterStreams
+} = require('../../../lib/ext');
+const { resolveDebridStreams } = require('../../../lib/debrid');
 
 module.exports = async (req, res) => {
   const { id } = req.query;
@@ -10,8 +16,11 @@ module.exports = async (req, res) => {
   }
 
   try {
+    const config = parseConfig(req.query);
     const streams = await fetchExtResults(imdbId);
-    res.status(200).json({ streams });
+    const filtered = filterStreams(streams, config);
+    const resolved = await resolveDebridStreams(filtered, config);
+    res.status(200).json({ streams: resolved });
   } catch (error) {
     res.status(200).json({ streams: [], error: error.message });
   }

@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/manifest.json", "destination": "/api/manifest" },
-    { "source": "/stream/:type/:id.json", "destination": "/api/stream/:type/:id" }
+    { "source": "/stream/:type/:id.json", "destination": "/api/stream/:type/:id" },
+    { "source": "/configure", "destination": "/configure.html" }
   ]
 }
