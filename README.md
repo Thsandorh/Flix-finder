@@ -29,4 +29,5 @@ Example:
 - Use the configuration page to set quality, include/exclude keywords, max results, and debrid settings.
 - Debrid options require an API token in the manifest query string.
 - If ext.to blocks requests with a 403 or returns no magnets, the addon retries through a text proxy.
+- Some titles require visiting the detail page to extract magnets; the addon fetches those pages as needed.
 - If ext.to responds with no results or fails, an empty stream list is returned.

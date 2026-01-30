@@ -17,7 +17,8 @@ module.exports = async (req, res) => {
 
   try {
     const config = parseConfig(req.query);
-    const streams = await fetchExtResults(imdbId);
+    const maxDetails = config.maxResults > 0 ? config.maxResults : 20;
+    const streams = await fetchExtResults(imdbId, { maxDetails });
     const filtered = filterStreams(streams, config);
     const resolved = await resolveDebridStreams(filtered, config);
     res.status(200).json({ streams: resolved });
