@@ -22,5 +22,5 @@ Example:
 
 ## Notes
 
-- The addon only accepts IMDb IDs (e.g. `tt1234567`).
+- The addon only accepts IMDb IDs (e.g. `tt1234567`) and ignores any season/episode suffixes.
 - If ext.to responds with no results or fails, an empty stream list is returned.
