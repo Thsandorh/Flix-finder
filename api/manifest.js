@@ -1,9 +1,9 @@
 const manifest = {
-  id: 'com.stremio.flixnest',
+  id: 'com.stremio.flixfinder',
   version: '2.0.0',
-  name: 'FlixNest',
+  name: 'Flix-Finder',
   description: 'Find and stream torrents from multiple sources',
-  logo: 'https://i.imgur.com/qlfRst5.png',
+  logo: 'https://raw.githubusercontent.com/Thsandorh/Flix-finder/main/logo.svg',
   configurable: true,
   resources: ['stream'],
   types: ['movie', 'series'],

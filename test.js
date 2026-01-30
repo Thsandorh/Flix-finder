@@ -1,7 +1,7 @@
 const { fetchExtResults, parseId, filterStreams, parseConfig } = require('./lib/ext');
 
 (async () => {
-  console.log('Testing FlixNest scraper...\n');
+  console.log('Testing Flix-Finder scraper...\n');
 
   // Test parseId
   console.log('parseId("tt0111161"):', parseId('tt0111161'));
