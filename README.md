@@ -1,33 +1,65 @@
-# Flix Finder Ext.to Stremio Addon
+# Flix-Finder
 
-This Stremio addon searches ext.to by IMDb ID and returns magnet links as streams.
+Stremio addon for torrent streaming. Searches multiple torrent indexers and returns streams directly to Stremio.
 
-## Deploy to Vercel
+## Features
 
-1. Deploy the repository to Vercel.
-2. Open the addon manifest:
-   - `https://<your-vercel-domain>/manifest.json`
-3. Optionally open the configuration page:
-   - `https://<your-vercel-domain>/configure`
-3. Add the addon to Stremio using the manifest URL.
+- Torrent search via Knaben aggregator (TPB, 1337x, RARBG, RuTracker, etc.)
+- Movies and TV series support
+- Quality filtering (4K, 1080p, 720p)
+- Keyword filters (include/exclude)
+- Real-Debrid and Torbox integration
+- Results sorted by seeders
 
-## Endpoint behavior
+## Installation
 
-- `GET /manifest.json` returns the addon manifest.
-- `GET /stream/{type}/{imdbId}.json` returns magnet streams scraped from:
-  `https://ext.to/browse/?imdb_id={imdbId}`
-- `GET /configure` shows a configuration page with quality, keyword, and debrid filters.
+### Hosted version
+1. Go to the [configure page](https://your-domain.vercel.app/configure)
+2. Set your preferences
+3. Click "Install in Stremio"
 
-Example:
+### Self-host on Vercel
+1. Fork this repo
+2. Deploy to Vercel
+3. Open `https://your-app.vercel.app/configure`
+
+## Configuration
+
+| Option | Description |
+|--------|-------------|
+| Quality | Filter by resolution (any/4K/1080p/720p) |
+| Max results | Limit number of streams |
+| Required keywords | Only show results containing ALL keywords |
+| Exclude keywords | Hide results containing ANY keyword |
+| Debrid | Real-Debrid or Torbox for cached streaming |
+
+## API Endpoints
+
 ```
-/stream/movie/tt1234567.json
+GET /manifest.json          - Addon manifest
+GET /configure              - Configuration page
+GET /stream/:type/:id.json  - Stream results
 ```
 
-## Notes
+Stream endpoint accepts query parameters for configuration:
+```
+/stream/movie/tt1234567.json?quality=1080p&maxResults=5
+```
 
-- The addon only accepts IMDb IDs (e.g. `tt1234567`) and ignores any season/episode suffixes.
-- Use the configuration page to set quality, include/exclude keywords, max results, and debrid settings.
-- Debrid options require an API token in the manifest query string.
-- If ext.to blocks requests with a 403 or returns no magnets, the addon retries through a text proxy and alternate host (search.extto.com).
-- Some titles require visiting the detail page to extract magnets; the addon fetches those pages as needed.
-- If ext.to responds with no results or fails, an empty stream list is returned.
+## Debrid Setup
+
+1. Get API token from [Real-Debrid](https://real-debrid.com/apitoken) or [Torbox](https://torbox.app)
+2. Select service in configuration
+3. Paste token and install
+
+Debrid converts torrents to direct HTTP streams for instant playback.
+
+## Tech
+
+- Vercel serverless functions
+- Knaben torrent API
+- Stremio addon protocol v3
+
+## License
+
+MIT
