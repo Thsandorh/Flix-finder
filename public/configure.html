@@ -85,6 +85,29 @@
         color: #666;
         margin-top: 4px;
       }
+      .checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 8px;
+      }
+      .checkbox-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+      }
+      .checkbox-item input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: #667eea;
+      }
+      .checkbox-item label {
+        margin: 0;
+        cursor: pointer;
+        font-size: 13px;
+      }
       .cta {
         display: flex;
         gap: 12px;
@@ -159,6 +182,23 @@
       <input id="exclude" type="text" placeholder="CAM, TS, HDCAM" />
       <p class="hint">Comma separated. Any match is excluded.</p>
 
+      <label>Torrent Providers</label>
+      <div class="checkbox-group">
+        <div class="checkbox-item">
+          <input type="checkbox" id="prov_knaben" value="knaben" checked />
+          <label for="prov_knaben">Knaben</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="prov_1337x" value="1337x" checked />
+          <label for="prov_1337x">1337x</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="prov_tgx" value="torrentgalaxy" checked />
+          <label for="prov_tgx">TorrentGalaxy</label>
+        </div>
+      </div>
+      <p class="hint">Select torrent sources to search</p>
+
       <label for="debrid">Debrid Service</label>
       <select id="debrid">
         <option value="none">None (magnet links)</option>
@@ -181,10 +221,18 @@
     <script>
       const $ = id => document.getElementById(id);
       const fields = ['quality', 'maxResults', 'include', 'exclude', 'debrid', 'debridToken'];
+      const providerIds = ['prov_knaben', 'prov_1337x', 'prov_tgx'];
+      const defaultProviders = ['knaben', '1337x', 'torrentgalaxy'];
 
       function encodeConfig(config) {
         const json = JSON.stringify(config);
         return btoa(json).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      }
+
+      function getSelectedProviders() {
+        return providerIds
+          .filter(id => $(id).checked)
+          .map(id => $(id).value);
       }
 
       function update() {
@@ -195,6 +243,7 @@
         const e = $('exclude').value.trim();
         const d = $('debrid').value;
         const t = $('debridToken').value.trim();
+        const providers = getSelectedProviders();
 
         if (q && q !== 'any') config.quality = q;
         if (m && m !== '10') config.maxResults = parseInt(m, 10);
@@ -202,6 +251,13 @@
         if (e) config.exclude = e;
         if (d && d !== 'none') config.debrid = d;
         if (t) config.debridToken = t;
+
+        // Only add providers if not all are selected (to keep URL shorter)
+        if (providers.length > 0 && providers.length < defaultProviders.length) {
+          config.providers = providers.join(',');
+        } else if (providers.length === 0) {
+          config.providers = 'knaben'; // Default to at least one
+        }
 
         let url;
         if (Object.keys(config).length > 0) {
@@ -217,6 +273,10 @@
 
       fields.forEach(id => {
         $(id).addEventListener('input', update);
+        $(id).addEventListener('change', update);
+      });
+
+      providerIds.forEach(id => {
         $(id).addEventListener('change', update);
       });
 
