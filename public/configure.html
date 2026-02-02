@@ -182,8 +182,13 @@
       const $ = id => document.getElementById(id);
       const fields = ['quality', 'maxResults', 'include', 'exclude', 'debrid', 'debridToken'];
 
+      function encodeConfig(config) {
+        const json = JSON.stringify(config);
+        return btoa(json).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      }
+
       function update() {
-        const p = new URLSearchParams();
+        const config = {};
         const q = $('quality').value;
         const m = $('maxResults').value;
         const i = $('include').value.trim();
@@ -191,15 +196,20 @@
         const d = $('debrid').value;
         const t = $('debridToken').value.trim();
 
-        if (q && q !== 'any') p.set('quality', q);
-        if (m && m !== '10') p.set('maxResults', m);
-        if (i) p.set('include', i);
-        if (e) p.set('exclude', e);
-        if (d && d !== 'none') p.set('debrid', d);
-        if (t) p.set('debridToken', t);
+        if (q && q !== 'any') config.quality = q;
+        if (m && m !== '10') config.maxResults = parseInt(m, 10);
+        if (i) config.include = i;
+        if (e) config.exclude = e;
+        if (d && d !== 'none') config.debrid = d;
+        if (t) config.debridToken = t;
 
-        const base = location.origin + '/manifest.json';
-        const url = p.toString() ? base + '?' + p : base;
+        let url;
+        if (Object.keys(config).length > 0) {
+          const encoded = encodeConfig(config);
+          url = location.origin + '/' + encoded + '/manifest.json';
+        } else {
+          url = location.origin + '/manifest.json';
+        }
 
         $('url').textContent = url;
         $('install').href = 'stremio://' + url.replace(/^https?:\/\//, '');
