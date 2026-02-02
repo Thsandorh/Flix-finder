@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/:config/manifest.json", "destination": "/api/config-manifest?config=:config" },
+    { "source": "/:config/stream/:type/:id.json", "destination": "/api/config-stream?config=:config&type=:type&id=:id" },
     { "source": "/manifest.json", "destination": "/api/manifest" },
     { "source": "/stream/:type/:id.json", "destination": "/api/stream/:type/:id" },
     { "source": "/configure", "destination": "/configure.html" }
