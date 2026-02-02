@@ -119,6 +119,47 @@
         word-break: break-all;
         color: #888;
       }
+      .community {
+        margin-top: 24px;
+        padding: 16px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(88, 101, 242, 0.18), rgba(114, 137, 218, 0.08));
+        border: 1px solid rgba(114, 137, 218, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .community-text {
+        font-size: 14px;
+        color: #d9dcff;
+      }
+      .community-text strong {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 4px;
+        color: #fff;
+      }
+      .discord-link {
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: #5865f2;
+        color: #fff;
+        font-weight: 600;
+        font-size: 13px;
+        text-decoration: none;
+        box-shadow: 0 8px 18px rgba(88, 101, 242, 0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        white-space: nowrap;
+      }
+      .discord-link:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 24px rgba(88, 101, 242, 0.45);
+      }
+      .discord-link:focus-visible {
+        outline: 3px solid rgba(143, 164, 255, 0.8);
+        outline-offset: 2px;
+      }
       @media (max-width: 500px) {
         .row { grid-template-columns: 1fr; }
         .cta { flex-direction: column; }
@@ -176,6 +217,21 @@
       </div>
 
       <div class="url-box" id="url"></div>
+
+      <div class="community">
+        <div class="community-text">
+          <strong>Join the Discord community</strong>
+          Get updates, tips, and help from other Flix-Finder users.
+        </div>
+        <a
+          class="discord-link"
+          href="https://discord.gg/GnKRAwwdcQ"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Discord invite
+        </a>
+      </div>
     </div>
 
     <script>
