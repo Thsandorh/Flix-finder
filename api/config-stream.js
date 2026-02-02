@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
     // Decode config from URL path (passed as query param by vercel rewrite)
     const decodedConfig = decodeConfig(req.query.config);
     const config = parseConfig(decodedConfig);
-    const streams = await fetchExtResults(id, { type, providers: config.providers });
+    const streams = await fetchExtResults(id, { type });
     const filtered = filterStreams(streams, config);
     const resolved = await resolveDebridStreams(filtered, config);
     res.status(200).json({ streams: resolved });
