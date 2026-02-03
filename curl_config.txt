@@ -1,5 +1,0 @@
-url = "https://megacloud.tv/ajax/v2/embed-1/getSources?id=qR77XxYwtoNl"
-header "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
-header "Referer: https://megacloud.tv/embed-1/v3/e-1/qR77XxYwtoNl?z="
-header "X-Requested-With: XMLHttpRequest"
-header "Accept: application/json, text/javascript, */*; q=0.01"
