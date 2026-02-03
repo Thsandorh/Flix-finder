@@ -49,6 +49,11 @@ Stream endpoint accepts query parameters for configuration:
 /stream/movie/tt1234567.json?quality=1080p&maxResults=5
 ```
 
+## Notes
+
+- Series searches with season/episode IDs are narrowed to the exact episode (SxxEyy / 3x01 patterns).
+- Knaben can be slow at times; requests are time-limited to keep the addon responsive. If Knaben times out, you may get fewer results from that source.
+
 ## Debrid Setup
 
 1. Get API token from [Real-Debrid](https://real-debrid.com/apitoken) or [Torbox](https://torbox.app)
