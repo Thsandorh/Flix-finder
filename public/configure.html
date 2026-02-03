@@ -80,6 +80,28 @@
         grid-template-columns: 1fr 1fr;
         gap: 16px;
       }
+      .source-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+        margin-top: 8px;
+      }
+      .checkbox-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: #12151c;
+        border: 1px solid #2a2f3a;
+        font-size: 13px;
+        color: #d7d7d7;
+      }
+      .checkbox-item input {
+        width: 16px;
+        height: 16px;
+        accent-color: #667eea;
+      }
       .hint {
         font-size: 12px;
         color: #666;
@@ -207,6 +229,22 @@
         <option value="torbox">Torbox</option>
       </select>
 
+      <label>Sources</label>
+      <div class="source-grid" id="sourceGrid">
+        <label class="checkbox-item">
+          <input type="checkbox" name="sources" value="knaben" checked />
+          Knaben
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="sources" value="eztv" checked />
+          EZTV
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="sources" value="yts" checked />
+          YTS
+        </label>
+      </div>
+
       <label for="debridToken">API Token</label>
       <input id="debridToken" type="password" placeholder="Your debrid API token" />
       <p class="hint">Get from Real-Debrid or Torbox account settings</p>
@@ -237,6 +275,8 @@
     <script>
       const $ = id => document.getElementById(id);
       const fields = ['quality', 'maxResults', 'include', 'exclude', 'debrid', 'debridToken'];
+      const sourceInputs = Array.from(document.querySelectorAll('input[name="sources"]'));
+      const allSources = sourceInputs.map(input => input.value);
 
       function encodeConfig(config) {
         const json = JSON.stringify(config);
@@ -251,6 +291,7 @@
         const e = $('exclude').value.trim();
         const d = $('debrid').value;
         const t = $('debridToken').value.trim();
+        const sources = sourceInputs.filter(input => input.checked).map(input => input.value);
 
         if (q && q !== 'any') config.quality = q;
         if (m && m !== '10') config.maxResults = parseInt(m, 10);
@@ -258,6 +299,7 @@
         if (e) config.exclude = e;
         if (d && d !== 'none') config.debrid = d;
         if (t) config.debridToken = t;
+        if (sources.length !== allSources.length) config.sources = sources;
 
         let url;
         if (Object.keys(config).length > 0) {
@@ -274,6 +316,9 @@
       fields.forEach(id => {
         $(id).addEventListener('input', update);
         $(id).addEventListener('change', update);
+      });
+      sourceInputs.forEach(input => {
+        input.addEventListener('change', update);
       });
 
       $('copy').onclick = async () => {

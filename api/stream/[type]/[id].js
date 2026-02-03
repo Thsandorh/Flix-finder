@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
 
   try {
     const config = parseConfig(req.query);
-    const streams = await fetchExtResults(id, { type });
+    const streams = await fetchExtResults(id, { type, sources: config.sources });
     const filtered = filterStreams(streams, config);
     const resolved = await resolveDebridStreams(filtered, config);
     res.status(200).json({ streams: resolved });
