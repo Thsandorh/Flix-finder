@@ -6,6 +6,7 @@ Stremio addon for torrent streaming. Searches multiple torrent indexers and retu
 
 - Torrent search via Knaben aggregator (TPB, 1337x, RARBG, RuTracker, etc.)
 - TV torrent fallback via EZTV API
+- Movie torrent fallback via YTS API
 - Movies and TV series support
 - Quality filtering (4K, 1080p, 720p)
 - Keyword filters (include/exclude)
