@@ -4,7 +4,12 @@ const { resolveDebridStreams } = require('../lib/debrid');
 function decodeConfig(configStr) {
   if (!configStr) return {};
   try {
-    const decoded = Buffer.from(configStr, 'base64').toString('utf8');
+    const raw = String(configStr).replace(/ /g, '+');
+    const normalized = raw
+      .replace(/-/g, '+')
+      .replace(/_/g, '/')
+      .padEnd(Math.ceil(raw.length / 4) * 4, '=');
+    const decoded = Buffer.from(normalized, 'base64').toString('utf8');
     return JSON.parse(decoded);
   } catch {
     return {};
