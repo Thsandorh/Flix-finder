@@ -17,10 +17,14 @@ module.exports = async (req, res) => {
   };
   
   try {
+    const startTime = Date.now();
     const resolved = await resolveDebridStreams(streams, config);
+    const endTime = Date.now();
+    
     res.status(200).json({ 
       success: true,
       message: 'Webtor test results',
+      executionTime: `${endTime - startTime}ms`,
       results: resolved 
     });
   } catch (e) {
