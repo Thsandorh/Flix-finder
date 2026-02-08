@@ -203,15 +203,15 @@
           <label>Quality</label>
           <div class="source-grid" id="qualityGrid">
             <label class="checkbox-item">
-              <input type="checkbox" name="qualities" value="2160p" />
+              <input type="checkbox" name="qualities" value="2160p" checked />
               4K / 2160p
             </label>
             <label class="checkbox-item">
-              <input type="checkbox" name="qualities" value="1080p" />
+              <input type="checkbox" name="qualities" value="1080p" checked />
               1080p
             </label>
             <label class="checkbox-item">
-              <input type="checkbox" name="qualities" value="720p" />
+              <input type="checkbox" name="qualities" value="720p" checked />
               720p
             </label>
           </div>
@@ -264,6 +264,10 @@
           <input type="checkbox" name="sources" value="torrentscsv" checked />
           TorrentsCSV
         </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="sources" value="katcr" checked />
+          KATCR
+        </label>
       </div>
 
       <label for="debridToken">API Token</label>
@@ -315,7 +319,7 @@
         const t = $('debridToken').value.trim();
         const sources = sourceInputs.filter(input => input.checked).map(input => input.value);
 
-        if (qualities.length) config.quality = qualities;
+        if (qualities.length && qualities.length < qualityInputs.length) config.quality = qualities;
         if (m && m !== '10') config.maxResults = parseInt(m, 10);
         if (i) config.include = i;
         if (e) config.exclude = e;
