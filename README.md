@@ -8,11 +8,13 @@ Stremio addon for torrent streaming. Searches multiple torrent indexers and retu
 - TV torrents via EZTV API
 - Movie torrents via YTS API
 - Anime torrents via AnimeTosho
+- Torrents via Nyaa search
+- Torrents via TorrentsCSV search
 - Movies and TV series support
 - Quality filtering (4K, 1080p, 720p)
 - Keyword filters (include/exclude)
 - Real-Debrid and Torbox integration
-- Results sorted by seeders
+- Flexible sorting (quality+seeders, quality+size, seeders, size)
 
 ## Installation
 
@@ -31,6 +33,7 @@ Stremio addon for torrent streaming. Searches multiple torrent indexers and retu
 | Option | Description |
 |--------|-------------|
 | Quality | Filter by resolution (any/4K/1080p/720p) |
+| Sorting | Order results by quality/seeders/size priority |
 | Max results | Limit number of streams |
 | Required keywords | Only show results containing ALL keywords |
 | Exclude keywords | Hide results containing ANY keyword |
@@ -53,6 +56,7 @@ Stream endpoint accepts query parameters for configuration:
 
 - Series searches with season/episode IDs are narrowed to the exact episode (SxxEyy / 3x01 patterns).
 - Knaben can be slow at times; requests are time-limited to keep the addon responsive. If Knaben times out, you may get fewer results from that source.
+- AnimeTosho and Nyaa are only queried for anime metadata to reduce irrelevant non-anime matches.
 
 ## Debrid Setup
 

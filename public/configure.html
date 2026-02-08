@@ -200,15 +200,33 @@
 
       <div class="row">
         <div>
-          <label for="quality">Quality</label>
-          <select id="quality">
-            <option value="any">Any</option>
-            <option value="2160p">4K / 2160p</option>
-            <option value="1080p">1080p</option>
-            <option value="720p">720p</option>
-          </select>
+          <label>Quality</label>
+          <div class="source-grid" id="qualityGrid">
+            <label class="checkbox-item">
+              <input type="checkbox" name="qualities" value="2160p" checked />
+              4K / 2160p
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="qualities" value="1080p" checked />
+              1080p
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="qualities" value="720p" checked />
+              720p
+            </label>
+          </div>
+          <p class="hint">You can select multiple qualities at the same time.</p>
         </div>
         <div>
+          <label for="sort">Sorting</label>
+          <select id="sort">
+            <option value="quality_seeders" selected>By quality then seeders</option>
+            <option value="quality_size">By quality then size</option>
+            <option value="seeders">By seeders</option>
+            <option value="size">By size</option>
+          </select>
+          <p class="hint">Choose how results are ordered before applying max results.</p>
+
           <label for="maxResults">Max results</label>
           <input id="maxResults" type="number" min="1" max="50" value="10" />
         </div>
@@ -247,7 +265,16 @@
           <input type="checkbox" name="sources" value="animetosho" checked />
           AnimeTosho
         </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="sources" value="nyaa" checked />
+          Nyaa
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="sources" value="torrentscsv" checked />
+          TorrentsCSV
+        </label>
       </div>
+      <p class="hint">AnimeTosho and Nyaa are only queried for anime titles to reduce irrelevant matches.</p>
 
       <label for="debridToken">API Token</label>
       <input id="debridToken" type="password" placeholder="Your debrid API token" />
@@ -278,8 +305,9 @@
 
     <script>
       const $ = id => document.getElementById(id);
-      const fields = ['quality', 'maxResults', 'include', 'exclude', 'debrid', 'debridToken'];
+      const fields = ['sort', 'maxResults', 'include', 'exclude', 'debrid', 'debridToken'];
       const sourceInputs = Array.from(document.querySelectorAll('input[name="sources"]'));
+      const qualityInputs = Array.from(document.querySelectorAll('input[name="qualities"]'));
       const allSources = sourceInputs.map(input => input.value);
 
       function encodeConfig(config) {
@@ -289,7 +317,7 @@
 
       function update() {
         const config = {};
-        const q = $('quality').value;
+        const qualities = qualityInputs.filter(input => input.checked).map(input => input.value);
         const m = $('maxResults').value;
         const i = $('include').value.trim();
         const e = $('exclude').value.trim();
@@ -297,7 +325,9 @@
         const t = $('debridToken').value.trim();
         const sources = sourceInputs.filter(input => input.checked).map(input => input.value);
 
-        if (q && q !== 'any') config.quality = q;
+        if (qualities.length && qualities.length < qualityInputs.length) config.quality = qualities;
+        const sort = $('sort').value;
+        if (sort && sort !== 'quality_seeders') config.sort = sort;
         if (m && m !== '10') config.maxResults = parseInt(m, 10);
         if (i) config.include = i;
         if (e) config.exclude = e;
@@ -322,6 +352,9 @@
         $(id).addEventListener('change', update);
       });
       sourceInputs.forEach(input => {
+        input.addEventListener('change', update);
+      });
+      qualityInputs.forEach(input => {
         input.addEventListener('change', update);
       });
 
