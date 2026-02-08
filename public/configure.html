@@ -218,6 +218,15 @@
           <p class="hint">You can select multiple qualities at the same time.</p>
         </div>
         <div>
+          <label for="sort">Sorting</label>
+          <select id="sort">
+            <option value="quality_seeders" selected>By quality then seeders</option>
+            <option value="quality_size">By quality then size</option>
+            <option value="seeders">By seeders</option>
+            <option value="size">By size</option>
+          </select>
+          <p class="hint">Choose how results are ordered before applying max results.</p>
+
           <label for="maxResults">Max results</label>
           <input id="maxResults" type="number" min="1" max="50" value="10" />
         </div>
@@ -264,6 +273,10 @@
           <input type="checkbox" name="sources" value="torrentscsv" checked />
           TorrentsCSV
         </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="sources" value="magnetdl" checked />
+          MagnetDL
+        </label>
       </div>
       <p class="hint">AnimeTosho and Nyaa are only queried for anime titles to reduce irrelevant matches.</p>
 
@@ -296,7 +309,7 @@
 
     <script>
       const $ = id => document.getElementById(id);
-      const fields = ['maxResults', 'include', 'exclude', 'debrid', 'debridToken'];
+      const fields = ['sort', 'maxResults', 'include', 'exclude', 'debrid', 'debridToken'];
       const sourceInputs = Array.from(document.querySelectorAll('input[name="sources"]'));
       const qualityInputs = Array.from(document.querySelectorAll('input[name="qualities"]'));
       const allSources = sourceInputs.map(input => input.value);
@@ -317,6 +330,8 @@
         const sources = sourceInputs.filter(input => input.checked).map(input => input.value);
 
         if (qualities.length && qualities.length < qualityInputs.length) config.quality = qualities;
+        const sort = $('sort').value;
+        if (sort && sort !== 'quality_seeders') config.sort = sort;
         if (m && m !== '10') config.maxResults = parseInt(m, 10);
         if (i) config.include = i;
         if (e) config.exclude = e;
