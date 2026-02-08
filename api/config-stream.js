@@ -18,7 +18,7 @@ function decodeConfig(configStr) {
   }
 }
 
-function withSupportLink(streams) {
+function withSupportLink(streams, maxResults) {
   const supportStream = {
     name: 'Flix-Finder',
     title: '🤝 Support Flix-Finder\n☕ Buy me a coffee on Ko-fi',
@@ -26,7 +26,16 @@ function withSupportLink(streams) {
     externalUrl: SUPPORT_URL
   };
 
-  return [...streams, supportStream];
+  if (!Number.isFinite(maxResults) || maxResults <= 1) {
+    return [...streams, supportStream];
+  }
+
+  const insertAt = Math.min(Math.max(maxResults - 1, 0), streams.length);
+  return [
+    ...streams.slice(0, insertAt),
+    supportStream,
+    ...streams.slice(insertAt)
+  ];
 }
 
 module.exports = async (req, res) => {
@@ -46,7 +55,7 @@ module.exports = async (req, res) => {
     const streams = await fetchExtResults(id, { type, sources: config.sources });
     const filtered = filterStreams(streams, config);
     const resolved = await resolveDebridStreams(filtered, config);
-    res.status(200).json({ streams: withSupportLink(resolved) });
+    res.status(200).json({ streams: withSupportLink(resolved, config.maxResults) });
   } catch (err) {
     res.status(200).json({ streams: [] });
   }
