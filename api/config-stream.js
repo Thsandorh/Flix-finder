@@ -1,6 +1,8 @@
 const { fetchExtResults, normalizeImdbId, parseConfig, filterStreams } = require('../lib/ext');
 const { resolveDebridStreams } = require('../lib/debrid');
 
+const SUPPORT_URL = 'https://ko-fi.com/sandortoth';
+
 function decodeConfig(configStr) {
   if (!configStr) return {};
   try {
@@ -14,6 +16,16 @@ function decodeConfig(configStr) {
   } catch {
     return {};
   }
+}
+
+function withSupportLink(streams) {
+  const supportStream = {
+    name: 'Flix-Finder',
+    title: '🤝 Support Flix-Finder\n☕ Buy me a coffee on Ko-fi',
+    externalUrl: SUPPORT_URL
+  };
+
+  return [...streams, supportStream];
 }
 
 module.exports = async (req, res) => {
@@ -33,7 +45,7 @@ module.exports = async (req, res) => {
     const streams = await fetchExtResults(id, { type, sources: config.sources });
     const filtered = filterStreams(streams, config);
     const resolved = await resolveDebridStreams(filtered, config);
-    res.status(200).json({ streams: resolved });
+    res.status(200).json({ streams: withSupportLink(resolved) });
   } catch (err) {
     res.status(200).json({ streams: [] });
   }
