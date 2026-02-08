@@ -2,8 +2,6 @@ const { fetchExtResults, normalizeImdbId, parseConfig, filterStreams } = require
 const { resolveDebridStreams } = require('../lib/debrid');
 const { withSupportLink } = require('../lib/support');
 
-const SUPPORT_URL = 'https://ko-fi.com/sandortoth';
-
 function decodeConfig(configStr) {
   if (!configStr) return {};
   try {
