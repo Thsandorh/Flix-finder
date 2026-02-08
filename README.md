@@ -8,6 +8,9 @@ Stremio addon for torrent streaming. Searches multiple torrent indexers and retu
 - TV torrents via EZTV API
 - Movie torrents via YTS API
 - Anime torrents via AnimeTosho
+- Torrents via Nyaa search
+- Torrents via TorrentsCSV search
+- Torrents via KATCR search
 - Movies and TV series support
 - Quality filtering (4K, 1080p, 720p)
 - Keyword filters (include/exclude)
@@ -53,6 +56,8 @@ Stream endpoint accepts query parameters for configuration:
 
 - Series searches with season/episode IDs are narrowed to the exact episode (SxxEyy / 3x01 patterns).
 - Knaben can be slow at times; requests are time-limited to keep the addon responsive. If Knaben times out, you may get fewer results from that source.
+- AnimeTosho and Nyaa are only queried for anime metadata to reduce irrelevant non-anime matches.
+- KATCR may be intermittently unavailable due to Cloudflare challenge pages.
 
 ## Debrid Setup
 
