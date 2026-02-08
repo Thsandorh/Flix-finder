@@ -19,14 +19,13 @@ function decodeConfig(configStr) {
 }
 
 function withSupportLink(streams) {
-  return [
-    ...streams,
-    {
-      name: 'Flix-Finder',
-      title: '☕ Support me\nIf Flix-Finder helped you, buy me a coffee',
-      externalUrl: SUPPORT_URL
-    }
-  ];
+  const supportStream = {
+    name: 'Flix-Finder',
+    title: '🤝 Support Flix-Finder\n☕ Buy me a coffee on Ko-fi',
+    externalUrl: SUPPORT_URL
+  };
+
+  return [...streams, supportStream];
 }
 
 module.exports = async (req, res) => {
