@@ -2,6 +2,8 @@ const { fetchExtResults, normalizeImdbId, parseConfig, filterStreams } = require
 const { resolveDebridStreams } = require('../lib/debrid');
 const { withSupportLink } = require('../lib/support');
 
+const SUPPORT_URL = 'https://ko-fi.com/sandortoth';
+
 function decodeConfig(configStr) {
   if (!configStr) return {};
   try {
@@ -15,6 +17,26 @@ function decodeConfig(configStr) {
   } catch {
     return {};
   }
+}
+
+function withSupportLink(streams, maxResults) {
+  const supportStream = {
+    name: 'Flix-Finder',
+    title: '🤝 Support Flix-Finder\n☕ Buy me a coffee on Ko-fi',
+    url: SUPPORT_URL,
+    externalUrl: SUPPORT_URL
+  };
+
+  if (!Number.isFinite(maxResults) || maxResults <= 1) {
+    return [...streams, supportStream];
+  }
+
+  const insertAt = Math.min(Math.max(maxResults - 1, 0), streams.length);
+  return [
+    ...streams.slice(0, insertAt),
+    supportStream,
+    ...streams.slice(insertAt)
+  ];
 }
 
 module.exports = async (req, res) => {
