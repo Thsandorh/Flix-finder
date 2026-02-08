@@ -1,5 +1,6 @@
 const { fetchExtResults, normalizeImdbId, parseConfig, filterStreams } = require('../lib/ext');
 const { resolveDebridStreams } = require('../lib/debrid');
+const { withSupportLink } = require('../lib/support');
 
 const SUPPORT_URL = 'https://ko-fi.com/sandortoth';
 
@@ -55,7 +56,7 @@ module.exports = async (req, res) => {
     const streams = await fetchExtResults(id, { type, sources: config.sources });
     const filtered = filterStreams(streams, config);
     const resolved = await resolveDebridStreams(filtered, config);
-    res.status(200).json({ streams: withSupportLink(resolved, config.maxResults) });
+    res.status(200).json({ streams: withSupportLink(resolved) });
   } catch (err) {
     res.status(200).json({ streams: [] });
   }
