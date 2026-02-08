@@ -22,6 +22,7 @@ function withSupportLink(streams) {
   const supportStream = {
     name: 'Flix-Finder',
     title: '🤝 Support Flix-Finder\n☕ Buy me a coffee on Ko-fi',
+    url: SUPPORT_URL,
     externalUrl: SUPPORT_URL
   };
 
