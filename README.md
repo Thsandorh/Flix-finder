@@ -56,6 +56,8 @@ Stream endpoint accepts query parameters for configuration:
 
 - Series searches with season/episode IDs are narrowed to the exact episode (SxxEyy / 3x01 patterns).
 - Knaben can be slow at times; requests are time-limited to keep the addon responsive. If Knaben times out, you may get fewer results from that source.
+- AnimeTosho and Nyaa are only queried for anime metadata to reduce irrelevant non-anime matches.
+- KATCR may be intermittently unavailable due to Cloudflare challenge pages.
 
 ## Debrid Setup
 
