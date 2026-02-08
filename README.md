@@ -10,7 +10,6 @@ Stremio addon for torrent streaming. Searches multiple torrent indexers and retu
 - Anime torrents via AnimeTosho
 - Torrents via Nyaa search
 - Torrents via TorrentsCSV search
-- Torrents via MagnetDL search
 - Movies and TV series support
 - Quality filtering (4K, 1080p, 720p)
 - Keyword filters (include/exclude)
