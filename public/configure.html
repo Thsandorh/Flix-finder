@@ -315,6 +315,21 @@
         return btoa(json).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
       }
 
+      function detectBasePath() {
+        const p = location.pathname || '/';
+        if (p === '/' || p === '/configure' || p === '/configure.html') return '';
+        if (/\/configure(?:\.html)?\/?$/.test(p)) {
+          return p.replace(/\/configure(?:\.html)?\/?$/, '');
+        }
+        return p.replace(/\/+$/, '');
+      }
+
+      function joinPath(base, suffix) {
+        const b = base ? base.replace(/\/+$/, '') : '';
+        const s = suffix.startsWith('/') ? suffix : '/' + suffix;
+        return b + s;
+      }
+
       function update() {
         const config = {};
         const qualities = qualityInputs.filter(input => input.checked).map(input => input.value);
@@ -335,12 +350,13 @@
         if (t) config.debridToken = t;
         if (sources.length !== allSources.length) config.sources = sources;
 
+        const basePath = detectBasePath();
         let url;
         if (Object.keys(config).length > 0) {
           const encoded = encodeConfig(config);
-          url = location.origin + '/' + encoded + '/manifest.json';
+          url = location.origin + joinPath(basePath, '/' + encoded + '/manifest.json');
         } else {
-          url = location.origin + '/manifest.json';
+          url = location.origin + joinPath(basePath, '/manifest.json');
         }
 
         $('url').textContent = url;

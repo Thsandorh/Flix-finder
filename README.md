@@ -23,10 +23,18 @@ Stremio addon for torrent streaming. Searches multiple torrent indexers and retu
 2. Set your preferences
 3. Click "Install in Stremio"
 
-### Self-host on Vercel
-1. Fork this repo
-2. Deploy to Vercel
-3. Open `https://your-app.vercel.app/configure`
+### Self-host on Node.js (regular hosting / cPanel)
+1. Upload this project to your Node.js app root.
+2. Use Node.js `18+` (required).
+3. Run `npm install`.
+4. Set startup file to `server.js`.
+5. Start the app and open `https://your-domain/configure`.
+
+cPanel Node.js app fields:
+- `Application root`: folder where this repo is uploaded
+- `Application URL`: your selected domain/subdomain
+- `Application startup file`: `server.js`
+- Optional env var for subpath deploy: `APP_BASE_PATH=/flix-finder` (if app runs under a path prefix)
 
 ## Configuration
 
@@ -68,7 +76,7 @@ Debrid converts torrents to direct HTTP streams for instant playback.
 
 ## Tech
 
-- Vercel serverless functions
+- Plain Node.js HTTP server
 - Knaben torrent API
 - Stremio addon protocol v3
 
