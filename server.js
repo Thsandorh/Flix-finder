@@ -68,7 +68,7 @@ function parseQuery(urlObject) {
   return query;
 }
 
-function sendFile(res, filePath, contentType, extraHeaders = {}) {
+function sendFile(res, filePath, contentType) {
   fs.readFile(filePath, (err, content) => {
     if (err) {
       res.statusCode = 404;
@@ -81,9 +81,6 @@ function sendFile(res, filePath, contentType, extraHeaders = {}) {
     } else {
       res.setHeader('Content-Type', 'application/octet-stream');
     }
-    Object.entries(extraHeaders).forEach(([key, value]) => {
-      if (value != null) res.setHeader(key, value);
-    });
     res.statusCode = 200;
     res.end(content);
   });
@@ -123,20 +120,12 @@ const server = http.createServer(async (req, res) => {
   const baseQuery = parseQuery(urlObject);
 
   if (pathname === '/') {
-    sendFile(res, path.join(PUBLIC_DIR, 'configure.html'), 'text/html; charset=utf-8', {
-      'Cache-Control': 'no-store, no-cache, must-revalidate',
-      Pragma: 'no-cache',
-      Expires: '0'
-    });
+    sendFile(res, path.join(PUBLIC_DIR, 'configure.html'), 'text/html; charset=utf-8');
     return;
   }
 
   if (pathname === '/configure' || pathname === '/configure.html') {
-    sendFile(res, path.join(PUBLIC_DIR, 'configure.html'), 'text/html; charset=utf-8', {
-      'Cache-Control': 'no-store, no-cache, must-revalidate',
-      Pragma: 'no-cache',
-      Expires: '0'
-    });
+    sendFile(res, path.join(PUBLIC_DIR, 'configure.html'), 'text/html; charset=utf-8');
     return;
   }
 
