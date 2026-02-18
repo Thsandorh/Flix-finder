@@ -23,7 +23,7 @@ const manifest = {
   resources: ['stream'],
   types: ['movie', 'series'],
   catalogs: [],
-  idPrefixes: ['tt'],
+  idPrefixes: ['tt', 'kitsu'],
   behaviorHints: {
     configurable: true,
     configurationRequired: false

@@ -13,7 +13,7 @@ Stremio addon for torrent streaming. Searches multiple torrent indexers and retu
 - Movies and TV series support
 - Quality filtering (4K, 1080p, 720p)
 - Keyword filters (include/exclude)
-- Real-Debrid and Torbox integration
+- Debrid integration: Real-Debrid, TorBox, AllDebrid, DebridLink, Premiumize, Offcloud, Put.io, EasyDebrid
 - Flexible sorting (quality+seeders, quality+size, seeders, size)
 
 ## Installation
@@ -45,7 +45,7 @@ cPanel Node.js app fields:
 | Max results | Limit number of streams |
 | Required keywords | Only show results containing ALL keywords |
 | Exclude keywords | Hide results containing ANY keyword |
-| Debrid | Real-Debrid or Torbox for cached streaming |
+| Debrid | Real-Debrid, TorBox, AllDebrid, DebridLink, Premiumize, Offcloud, Put.io, EasyDebrid |
 
 ## API Endpoints
 
@@ -68,7 +68,7 @@ Stream endpoint accepts query parameters for configuration:
 
 ## Debrid Setup
 
-1. Get API token from [Real-Debrid](https://real-debrid.com/apitoken) or [Torbox](https://torbox.app)
+1. Get API token/key from your debrid provider account (Real-Debrid / TorBox / AllDebrid / DebridLink / Premiumize / Offcloud / Put.io / EasyDebrid)
 2. Select service in configuration
 3. Paste token if needed and install
 
