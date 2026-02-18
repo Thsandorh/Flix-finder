@@ -8,5 +8,23 @@
     { "source": "/manifest.json", "destination": "/api/manifest" },
     { "source": "/stream/:type/:id.json", "destination": "/api/stream/:type/:id" },
     { "source": "/configure", "destination": "/configure.html" }
+  ],
+  "headers": [
+    {
+      "source": "/configure",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "0" }
+      ]
+    },
+    {
+      "source": "/configure.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "0" }
+      ]
+    }
   ]
 }
