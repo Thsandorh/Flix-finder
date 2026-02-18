@@ -2,6 +2,18 @@ const { fetchExtResults, normalizeImdbId, parseConfig, filterStreams } = require
 const { resolveDebridStreams } = require('../lib/debrid');
 const { withSupportLink } = require('../lib/support');
 
+function resolveHost(req) {
+  const forwardedProto = String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim();
+  const proto = forwardedProto || 'http';
+  const forwardedHost = String(req.headers['x-forwarded-host'] || '').split(',')[0].trim();
+  const host = forwardedHost || String(req.headers.host || '').trim() || 'localhost';
+  const rawBasePath = String(process.env.APP_BASE_PATH || '').trim();
+  const basePath = !rawBasePath || rawBasePath === '/'
+    ? ''
+    : `/${rawBasePath.replace(/^\/+|\/+$/g, '')}`;
+  return `${proto}://${host}${basePath}`;
+}
+
 function decodeConfig(configStr) {
   if (!configStr) return {};
   try {
@@ -31,6 +43,7 @@ module.exports = async (req, res) => {
     // Decode config from URL path (passed as query param by vercel rewrite)
     const decodedConfig = decodeConfig(req.query.config);
     const config = parseConfig(decodedConfig);
+    config.host = resolveHost(req);
     const streams = await fetchExtResults(id, { type, sources: config.sources });
     const filtered = filterStreams(streams, config);
     const resolved = await resolveDebridStreams(filtered, config);

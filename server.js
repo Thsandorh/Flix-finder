@@ -7,6 +7,7 @@ const manifestHandler = require('./api/manifest');
 const configManifestHandler = require('./api/config-manifest');
 const configStreamHandler = require('./api/config-stream');
 const streamHandler = require('./api/stream/[type]/[id]');
+const resolveHandler = require('./api/resolve');
 
 const PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
@@ -182,6 +183,42 @@ const server = http.createServer(async (req, res) => {
 
   if (pathname === '/api/config-stream') {
     await runHandler(configStreamHandler, req, res, baseQuery);
+    return;
+  }
+
+  const resolveMatch = pathname.match(/^\/resolve\/([^/]+)\/([^/]+)(?:\/[^/]+)?$/);
+  if (resolveMatch) {
+    const query = {
+      ...baseQuery,
+      service: decodeURIComponent(resolveMatch[1]),
+      infoHash: decodeURIComponent(resolveMatch[2])
+    };
+    await runHandler(resolveHandler, req, res, query);
+    return;
+  }
+
+  // Prefix-tolerant fallback (mirrors nCore-style routing robustness):
+  // handles requests like /flix-finder/resolve/:service/:infoHash when base path
+  // is not stripped by the hosting layer.
+  const prefixedResolveMatch = pathname.match(/^\/[^/]+\/resolve\/([^/]+)\/([^/]+)(?:\/[^/]+)?$/);
+  if (prefixedResolveMatch) {
+    const query = {
+      ...baseQuery,
+      service: decodeURIComponent(prefixedResolveMatch[1]),
+      infoHash: decodeURIComponent(prefixedResolveMatch[2])
+    };
+    await runHandler(resolveHandler, req, res, query);
+    return;
+  }
+
+  if (pathname === '/api/resolve') {
+    await runHandler(resolveHandler, req, res, baseQuery);
+    return;
+  }
+
+  // Prefix-tolerant fallback for /:prefix/api/resolve.
+  if (/^\/[^/]+\/api\/resolve$/.test(pathname)) {
+    await runHandler(resolveHandler, req, res, baseQuery);
     return;
   }
 

@@ -5,6 +5,8 @@
   "rewrites": [
     { "source": "/:config/manifest.json", "destination": "/api/config-manifest?config=:config" },
     { "source": "/:config/stream/:type/:id.json", "destination": "/api/config-stream?config=:config&type=:type&id=:id" },
+    { "source": "/resolve/:service/:infoHash/:filename", "destination": "/api/resolve?service=:service&infoHash=:infoHash" },
+    { "source": "/resolve/:service/:infoHash", "destination": "/api/resolve?service=:service&infoHash=:infoHash" },
     { "source": "/manifest.json", "destination": "/api/manifest" },
     { "source": "/stream/:type/:id.json", "destination": "/api/stream/:type/:id" },
     { "source": "/configure", "destination": "/configure.html" }

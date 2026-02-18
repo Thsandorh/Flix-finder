@@ -23,7 +23,7 @@ const manifest = {
   resources: ['stream'],
   types: ['movie', 'series'],
   catalogs: [],
-  idPrefixes: ['tt'],
+  idPrefixes: ['tt', 'kitsu'],
   behaviorHints: {
     configurable: true,
     configurationRequired: false
@@ -45,3 +45,4 @@ module.exports = (req, res) => {
 
   res.status(200).json(manifestCopy);
 };
+
