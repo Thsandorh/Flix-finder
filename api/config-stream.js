@@ -43,8 +43,13 @@ module.exports = async (req, res) => {
     // Decode config from URL path (passed as query param by vercel rewrite)
     const decodedConfig = decodeConfig(req.query.config);
     const config = parseConfig(decodedConfig);
+    config.type = type;
     config.host = resolveHost(req);
-    const streams = await fetchExtResults(id, { type, sources: config.sources });
+    const streams = await fetchExtResults(id, {
+      type,
+      sources: config.sources,
+      bitsearchApiKey: config.bitsearchApiKey
+    });
     const filtered = filterStreams(streams, config);
     const resolved = await resolveDebridStreams(filtered, config);
     res.status(200).json({ streams: withSupportLink(resolved) });

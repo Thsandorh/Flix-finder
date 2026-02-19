@@ -26,8 +26,13 @@ module.exports = async (req, res) => {
 
   try {
     const config = parseConfig(req.query);
+    config.type = type;
     config.host = resolveHost(req);
-    const streams = await fetchExtResults(id, { type, sources: config.sources });
+    const streams = await fetchExtResults(id, {
+      type,
+      sources: config.sources,
+      bitsearchApiKey: config.bitsearchApiKey
+    });
     const filtered = filterStreams(streams, config);
     const resolved = await resolveDebridStreams(filtered, config);
     res.status(200).json({ streams: withSupportLink(resolved) });

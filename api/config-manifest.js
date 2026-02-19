@@ -21,9 +21,9 @@ const manifest = {
   logo: 'https://raw.githubusercontent.com/Thsandorh/Flix-finder/main/logo.svg',
   configurable: true,
   resources: ['stream'],
-  types: ['movie', 'series'],
+  types: ['movie', 'series', 'anime'],
   catalogs: [],
-  idPrefixes: ['tt', 'kitsu'],
+  idPrefixes: ['tt', 'kitsu', 'anilist', 'animekitsu'],
   behaviorHints: {
     configurable: true,
     configurationRequired: false

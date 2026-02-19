@@ -5,6 +5,7 @@ Stremio addon for torrent streaming. Searches multiple torrent indexers and retu
 ## Features
 
 - Torrent search via Knaben aggregator (TPB, 1337x, RARBG, RuTracker, etc.)
+- Torrents via BitSearch API
 - TV torrents via EZTV API
 - Movie torrents via YTS API
 - Anime torrents via AnimeTosho
@@ -64,6 +65,7 @@ Stream endpoint accepts query parameters for configuration:
 
 - Series searches with season/episode IDs are narrowed to the exact episode (SxxEyy / 3x01 patterns).
 - Knaben can be slow at times; requests are time-limited to keep the addon responsive. If Knaben times out, you may get fewer results from that source.
+- BitSearch requests use `/api/v1/search` with a 3 second timeout and seeders-desc order (no API key required).
 - AnimeTosho and Nyaa are only queried for anime metadata to reduce irrelevant non-anime matches.
 
 ## Debrid Setup
